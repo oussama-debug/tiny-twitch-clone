@@ -8,7 +8,7 @@ import { FormEvent, useState } from "react";
 
 type ChatBoxProps = {
   channelId: string;
-  userId: string;
+  userId?: string;
   channel: string;
 };
 
@@ -33,7 +33,7 @@ export default function ChatBox({ channel, userId }: ChatBoxProps) {
   };
 
   const onSend = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && userId) {
       await message({ channelId: channel, userId: userId, message: text });
       setText("");
     }
