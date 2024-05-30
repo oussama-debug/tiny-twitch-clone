@@ -22,7 +22,7 @@ export default async function ChannelPage({
   return (
     <div className="flex-1 flex-row flex">
       <div className="flex-1">
-        {channel && currentUser && (
+        {channel && (
           <ChannelStream
             userId={currentUser?.id}
             isMine={isMine}

@@ -4,7 +4,7 @@ import Button from "@/components/button";
 import { useSearchChannels } from "@/components/hooks/channels/useSearchChannels";
 import useLocalUser from "@/components/hooks/user/useUser";
 import Input from "@/components/input";
-import { useUser } from "@clerk/nextjs";
+import { useClerk, useUser } from "@clerk/nextjs";
 import { type Channel } from "@prisma/client";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -25,6 +25,7 @@ export default function LandingHeader() {
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
+  const { signOut } = useClerk();
   const { user, isSignedIn, isLoaded } = useUser();
   const { isSuccess, data: localUser, isPending } = useLocalUser();
   const { data: channelsList, refetch } = useSearchChannels(search);
@@ -91,17 +92,22 @@ export default function LandingHeader() {
         </div>
       ) : (
         <div className="flex flex-row h-5 text-sm justify-start space-x-2 items-center">
-          {!isPending ? (
-            isSuccess && !localUser.data ? (
-              user?.emailAddresses[0].emailAddress!
+          <div className="flex flex-row justify-start items-center space-x-2">
+            <Button variant={"link"} onClick={() => signOut()}>
+              Logout
+            </Button>
+            {!isPending ? (
+              isSuccess && !localUser.data ? (
+                user?.emailAddresses[0].emailAddress!
+              ) : (
+                <Link
+                  href={`/@${localUser?.data.name}`}
+                >{`@${localUser?.data.name}`}</Link>
+              )
             ) : (
-              <Link
-                href={`/@${localUser?.data.name}`}
-              >{`@${localUser?.data.name}`}</Link>
-            )
-          ) : (
-            ""
-          )}
+              ""
+            )}
+          </div>
         </div>
       )}
     </header>

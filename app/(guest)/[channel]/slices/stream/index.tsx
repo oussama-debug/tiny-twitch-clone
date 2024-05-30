@@ -30,7 +30,7 @@ export default function ChannelStream({
   };
 
   useEffect(() => {
-    if (channel) {
+    if (channel && userId) {
       let notification = pusherClient.subscribe(channel?.data.id);
       notification.bind("new_stream", () => {
         setShowVideo(true);
@@ -39,7 +39,7 @@ export default function ChannelStream({
         notification.unsubscribe();
       };
     }
-  }, [channel]);
+  }, [channel, userId]);
 
   useEffect(() => {
     setChannelUsername(username);
@@ -50,7 +50,7 @@ export default function ChannelStream({
     <div className="flex-1 h-full flex flex-col justify-start items-start px-2 py-2">
       <div className="w-full flex flex-row px-5 py-2 justify-between items-center">
         <h1 className="text-sm font-medium">@{username}</h1>
-        {!isMine && channel && channel.data ? (
+        {!isMine && userId && channel && channel.data ? (
           <div className="flex justify-start items-center space-x-2">
             <FollowButton
               channelId={channel?.data.id}
@@ -65,16 +65,18 @@ export default function ChannelStream({
             />
           </div>
         ) : (
-          <div className="flex justify-start items-center space-x-2">
-            <Button
-              type="button"
-              variant={"empty"}
-              onClick={() => launchStream()}
-              className="h-7"
-            >
-              Launch stream
-            </Button>
-          </div>
+          userId && (
+            <div className="flex justify-start items-center space-x-2">
+              <Button
+                type="button"
+                variant={"empty"}
+                onClick={() => launchStream()}
+                className="h-7"
+              >
+                Launch stream
+              </Button>
+            </div>
+          )
         )}
       </div>
       {isMine && (

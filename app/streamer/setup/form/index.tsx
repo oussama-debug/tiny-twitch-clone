@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { FiAtSign } from "react-icons/fi";
 import { toast } from "sonner";
 import { TbCircleCheck } from "react-icons/tb";
+import { useQueryClient } from "@tanstack/react-query";
 
 export type SetupFormInputValue = { username: string; services: string[] };
 
@@ -57,6 +58,7 @@ function SetupTagsFormItem({ code, isIncluded, onSelect }: SetupTagsItem) {
 }
 
 export default function SetupForm() {
+  const queryClinet = useQueryClient();
   const [loading, setIsLoading] = useState(false);
   const { register, handleSubmit } = useForm<SetupFormInputValue>();
   const [services, setServices] = useState<SetupTags[]>([]);
@@ -71,6 +73,7 @@ export default function SetupForm() {
         return;
       }
       const result = await mutateAsync({ username: v.username, services });
+      queryClinet.invalidateQueries();
       if (result.code && result.code === 200) {
         window.location.href = "/";
       }
