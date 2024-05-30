@@ -5,6 +5,7 @@ import { ZodError, z } from "zod";
 
 const postChannelInformationSchema = z.object({
   username: z.string().min(2, "A minimum of 4 characters is required"),
+  services: z.string().array(),
 });
 
 export async function POST(req: NextRequest) {
@@ -27,6 +28,7 @@ export async function POST(req: NextRequest) {
 
     const user = await setupChannel({
       username: parse.username,
+      services: parse.services,
     });
 
     return Response.json(

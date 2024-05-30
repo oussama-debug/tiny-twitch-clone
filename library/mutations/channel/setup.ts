@@ -2,8 +2,11 @@ import prisma from "@/library/database";
 import { auth } from "@clerk/nextjs/server";
 import slugify from "slugify";
 
-type SetupChannelValues = { username: string };
-export default async function setupChannel({ username }: SetupChannelValues) {
+type SetupChannelValues = { username: string; services: string[] };
+export default async function setupChannel({
+  username,
+  services,
+}: SetupChannelValues) {
   const { userId } = auth();
 
   const newUser = await prisma.user.create({
@@ -14,6 +17,7 @@ export default async function setupChannel({ username }: SetupChannelValues) {
         create: {
           username: slugify(username.toLowerCase(), "_"),
           name: username,
+          tags: services,
         },
       },
     },

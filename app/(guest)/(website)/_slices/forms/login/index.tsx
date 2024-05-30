@@ -17,6 +17,30 @@ export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { isLoaded, signIn, setActive } = useSignIn();
 
+  const onGoogleLogin = async () => {
+    if (!isLoaded) {
+      toast.error(
+        "Something went wrong while trying to authenticate. Please check your browser compatibility"
+      );
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await signIn.authenticateWithRedirect({
+        strategy: "oauth_google",
+        redirectUrl: "/redirect",
+        redirectUrlComplete: "/",
+      });
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      toast.error(
+        "Something went wrong while trying to authenticate. Please check your credentials."
+      );
+    }
+  };
+
   const loginFunc = async (values: LoginFormValues) => {
     if (!isLoaded) {
       toast.error(
@@ -85,6 +109,20 @@ export default function LoginForm() {
             className="space-x-1 w-full"
           >
             <span>Continue with email</span>
+            <FiChevronRight
+              className="text-white"
+              size={18}
+              strokeWidth={2.5}
+            />
+          </Button>
+          <Button
+            type="submit"
+            variant={"empty"}
+            onClick={() => onGoogleLogin()}
+            loading={isLoading}
+            className="space-x-1 w-full"
+          >
+            <span>Continue with Google</span>
             <FiChevronRight
               className="text-white"
               size={18}

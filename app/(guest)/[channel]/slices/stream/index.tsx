@@ -77,7 +77,7 @@ export default function ChannelStream({
           </div>
         )}
       </div>
-      {showVideo && (
+      {showVideo ? (
         <iframe
           src={
             "https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&cc_load_policy=1&mute=1&mute=1&enablejsapi=1"
@@ -85,6 +85,10 @@ export default function ChannelStream({
           className="w-full"
           height={500}
         />
+      ) : (
+        <div className="w-full flex flex-col justify-center items-center">
+          <p className="text-sm">Not streaming at the moment</p>
+        </div>
       )}
     </div>
   );

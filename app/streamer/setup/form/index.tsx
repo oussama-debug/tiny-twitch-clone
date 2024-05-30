@@ -10,7 +10,7 @@ import { FiAtSign } from "react-icons/fi";
 import { toast } from "sonner";
 import { TbCircleCheck } from "react-icons/tb";
 
-export type SetupFormInputValue = { username: string };
+export type SetupFormInputValue = { username: string; services: string[] };
 
 export enum SetupTags {
   GTAV = "GTAV",
@@ -70,7 +70,7 @@ export default function SetupForm() {
         toast.error(`Choose at least one tag for your channel`);
         return;
       }
-      const result = await mutateAsync({ username: v.username });
+      const result = await mutateAsync({ username: v.username, services });
       if (result.code && result.code === 200) {
         window.location.href = "/";
       }

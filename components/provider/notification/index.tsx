@@ -15,6 +15,7 @@ export default function NotificationProvider({
 
   useEffect(() => {
     if (user && user.data && pusherClient) {
+      pusherClient.subscribe(`presence-online`);
       let followings = user.data.following?.map((f) => f);
       let channelsTosubscribe = followings?.map((f) => f.following);
 
