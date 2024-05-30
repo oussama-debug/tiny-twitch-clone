@@ -4,9 +4,10 @@ import AuthenticationProvider from "@/components/provider/authentication";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 import { RequestQueryClientProvider } from "@/library/provider";
+import clsx from "clsx";
+import NotificationProvider from "@/components/provider/notification";
 
 import "./globals.scss";
-import clsx from "clsx";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -40,7 +41,7 @@ export default function RootLayout({
           <ClerkProvider>
             <AuthenticationProvider>
               <RequestQueryClientProvider>
-                {children}
+                <NotificationProvider>{children}</NotificationProvider>
               </RequestQueryClientProvider>
             </AuthenticationProvider>
           </ClerkProvider>

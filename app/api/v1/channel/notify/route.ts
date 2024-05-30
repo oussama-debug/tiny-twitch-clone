@@ -1,9 +1,10 @@
-import followChannel from "@/library/mutations/channel/follow";
+import { pusherServer } from "@/library/pusher";
+import { getUniqueChannelById } from "@/library/queries/channel/get-unique";
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest } from "next/server";
 import { ZodError, z } from "zod";
 
-const followChannelInformationSchema = z.object({
+const notifyChannelInformationSchema = z.object({
   channelId: z.string(),
 });
 
@@ -23,9 +24,12 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const parse = followChannelInformationSchema.parse(body);
+    const parse = notifyChannelInformationSchema.parse(body);
 
-    const follow = await followChannel(parse.channelId);
+    const channel = await getUniqueChannelById(parse.channelId);
+    const follow = await pusherServer.trigger(parse.channelId, "new_stream", {
+      channelName: `@${channel?.username}`,
+    });
 
     return Response.json(
       { data: follow, code: 200, message: "Successful follow" },
