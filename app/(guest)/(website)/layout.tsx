@@ -9,7 +9,7 @@ export default async function WebsiteLayout({
 }) {
   const user = auth();
   const profile = await getUserProfileByClerkUserId();
-  const needSetup = profile === null && user;
+  const needSetup = profile === null && user.userId;
 
   if (needSetup && user) redirect("/streamer/setup");
 
