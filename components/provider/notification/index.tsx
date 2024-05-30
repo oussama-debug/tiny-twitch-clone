@@ -24,7 +24,7 @@ export default function NotificationProvider({
         notifcation.bind("new_stream", (payload: { channelName: string }) => {
           let name = payload.channelName;
           let isNotifOff = localStorage.getItem("notif");
-          if (isNotifOff && isNotifOff === "on") {
+          if (isNotifOff === "on") {
             toast.message(
               <div className="text-sm text-slate-600">
                 You can watch your favorite star stream {name}&nbsp;
