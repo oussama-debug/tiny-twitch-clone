@@ -2,6 +2,7 @@ import { getUserProfileByClerkUserId } from "@/library/queries/user/get-user";
 import ChannelChat from "./slices/chat";
 import ChannelStream from "./slices/stream";
 import { notFound } from "next/navigation";
+import { getUniqueChannelByUsername } from "@/library/queries/channel/get-unique";
 
 export default async function ChannelPage({
   params,
@@ -12,6 +13,9 @@ export default async function ChannelPage({
 
   const channel = decodeURIComponent(params.channel);
   const currentUser = await getUserProfileByClerkUserId();
+  const fullChannel = await getUniqueChannelByUsername(
+    channel.replace("@", "")
+  );
   const isMine =
     decodeURIComponent(params.channel) === `@${currentUser?.channel?.username}`;
 
@@ -26,7 +30,13 @@ export default async function ChannelPage({
           />
         )}
       </div>
-      <ChannelChat />
+      {currentUser && fullChannel && (
+        <ChannelChat
+          userId={currentUser.id!}
+          channelId={fullChannel!.id}
+          channelUsername={channel}
+        />
+      )}
     </div>
   );
 }

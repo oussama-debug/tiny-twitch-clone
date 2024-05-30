@@ -3,7 +3,7 @@
 import useUser from "@/components/hooks/user/useUser";
 import { pusherClient } from "@/library/pusher";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { toast } from "sonner";
 
 export default function NotificationProvider({

@@ -8,3 +8,10 @@ export async function getUserProfileByClerkUserId() {
     include: { channel: true, following: { include: { following: true } } },
   });
 }
+
+export async function getUserProfileById(id: string) {
+  return await prisma.user.findUnique({
+    where: { id: id ?? "" },
+    include: { channel: true, following: { include: { following: true } } },
+  });
+}
