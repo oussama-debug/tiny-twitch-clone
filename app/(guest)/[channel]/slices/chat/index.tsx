@@ -42,7 +42,7 @@ export default function ChannelChat({
   useEffect(() => {
     let messageSubscription = pusherClient.subscribe(channelId);
     messageSubscription.bind("new_message", (payload: ChannelChatMessage) => {
-      setMessages((m) => [..._.uniq(m, "createdAt"), payload]);
+      setMessages((m) => [..._.uniq(m), payload]);
       if (ref.current) {
         ref.current.scroll({
           top: ref.current.scrollHeight,
@@ -62,7 +62,7 @@ export default function ChannelChat({
           className="h-[calc(100dvh-130px)] overflow-y-scroll overflow-x-hidden flex-col flex w-full"
           ref={ref}
         >
-          {_.uniq(messages, "createdAt").map((msg: ChannelChatMessage) => (
+          {_.uniq(messages).map((msg: ChannelChatMessage) => (
             <ChannelMessage key={`${msg.createdAt}_key`} {...msg} />
           ))}
         </ul>

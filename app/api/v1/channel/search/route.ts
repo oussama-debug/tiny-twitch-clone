@@ -1,7 +1,7 @@
 import { getSearchChannels } from "@/library/queries/channel/get-search";
-import { NextApiRequest } from "next";
+import { NextRequest } from "next/server";
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url!);
   const channels = await getSearchChannels(searchParams.get("name") ?? "");
 

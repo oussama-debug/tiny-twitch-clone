@@ -10,6 +10,9 @@ export async function getUniqueChannelByUsername(username: string) {
 export async function getUniqueChannelById(id: string) {
   return await prisma.channel.findUnique({
     where: { id },
-    include: { followers: { include: { follower: true, following: true } } },
+    include: {
+      user: true,
+      followers: { include: { follower: true, following: true } },
+    },
   });
 }

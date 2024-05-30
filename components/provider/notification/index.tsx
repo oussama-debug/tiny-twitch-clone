@@ -23,6 +23,7 @@ export default function NotificationProvider({
         let notifcation = pusherClient.subscribe(channel.id);
         notifcation.bind("new_stream", (payload: { channelName: string }) => {
           let name = payload.channelName;
+          console.log(name);
           toast.message(
             <div className="text-sm text-slate-600">
               You can watch your favorite star stream {name}&nbsp;
