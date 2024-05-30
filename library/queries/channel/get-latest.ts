@@ -4,5 +4,6 @@ export async function getLatestChannels() {
   return await prisma.channel.findMany({
     orderBy: { createdAt: "desc" },
     take: 10,
+    skip: 0,
   });
 }

@@ -26,7 +26,7 @@ const ibmFont = IBM_Plex_Sans({
   weight: ["100", "200", "300", "400", "500"],
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
