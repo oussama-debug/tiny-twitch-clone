@@ -3,10 +3,9 @@ import { createRef, useEffect, useState } from "react";
 import ChatBox from "../chat-box/index";
 import { pusherClient } from "@/library/pusher";
 import _ from "lodash";
-import moment from "moment";
 
 type ChannelChatProps = {
-  userId: string;
+  userId?: string;
   channelId: string;
   channelUsername: string;
 };

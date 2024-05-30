@@ -30,10 +30,10 @@ export default async function ChannelPage({
           />
         )}
       </div>
-      {currentUser && fullChannel && (
+      {fullChannel && (
         <ChannelChat
-          userId={currentUser.id!}
-          channelId={fullChannel!.id}
+          userId={currentUser?.id ?? ""}
+          channelId={fullChannel?.id}
           channelUsername={channel}
         />
       )}
