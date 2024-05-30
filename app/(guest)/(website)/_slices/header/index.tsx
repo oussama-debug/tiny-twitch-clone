@@ -39,6 +39,8 @@ export default function LandingHeader() {
     router.replace(`${pathname}?${newParams}`);
   };
 
+  const turnOffNotifications = () => localStorage.setItem("notif", "off");
+
   useEffect(() => {
     if (search.length > 0) {
       refetch();
@@ -76,7 +78,7 @@ export default function LandingHeader() {
         <div className="flex flex-row h-5 justify-start space-x-2 items-center">
           <Button
             type="button"
-            className="h-7"
+            className="h-7 text-[.8rem]"
             variant={"link"}
             onClick={() => onDisplayAuthentication("login")}
           >
@@ -93,7 +95,18 @@ export default function LandingHeader() {
       ) : (
         <div className="flex flex-row h-5 text-sm justify-start space-x-2 items-center">
           <div className="flex flex-row justify-start items-center space-x-2">
-            <Button variant={"link"} onClick={() => signOut()}>
+            <Button
+              variant={"link"}
+              className="font-normal"
+              onClick={() => turnOffNotifications()}
+            >
+              Turn off notifications
+            </Button>
+            <Button
+              variant={"link"}
+              className="font-normal"
+              onClick={() => signOut()}
+            >
               Logout
             </Button>
             {!isPending ? (

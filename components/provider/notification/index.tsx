@@ -23,17 +23,20 @@ export default function NotificationProvider({
         let notifcation = pusherClient.subscribe(channel.id);
         notifcation.bind("new_stream", (payload: { channelName: string }) => {
           let name = payload.channelName;
-          console.log(name);
-          toast.message(
-            <div className="text-sm text-slate-600">
-              You can watch your favorite star stream {name}&nbsp;
-              <Link href={`/${name}`} className="text-blue-500">
-                here
-              </Link>
-            </div>,
-            { duration: 5000, position: "top-right", closeButton: true }
-          );
+          let isNotifOff = localStorage.getItem("notif");
+          if (isNotifOff && isNotifOff === "on") {
+            toast.message(
+              <div className="text-sm text-slate-600">
+                You can watch your favorite star stream {name}&nbsp;
+                <Link href={`/${name}`} className="text-blue-500">
+                  here
+                </Link>
+              </div>,
+              { duration: 5000, position: "top-right", closeButton: true }
+            );
+          }
         });
+
         return () => {
           notifcation.unsubscribe();
         };
