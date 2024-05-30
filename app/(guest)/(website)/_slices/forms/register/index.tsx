@@ -7,7 +7,6 @@ import { FiChevronRight } from "react-icons/fi";
 import { useSignUp } from "@clerk/nextjs";
 import { toast } from "sonner";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 export type RegisterFormValues = {
   email: string;
@@ -15,7 +14,6 @@ export type RegisterFormValues = {
 };
 
 export default function RegisterForm() {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const { isLoaded, signUp, setActive } = useSignUp();
 
@@ -36,7 +34,7 @@ export default function RegisterForm() {
       });
       if (signupResult.status === "complete") {
         await setActive({ session: signupResult.createdSessionId });
-        router.push("/");
+        window.location.href = "/";
       } else if (signupResult.status === "missing_requirements") {
         setIsLoading(false);
         toast.error("Please check your credentials and input and try again.");

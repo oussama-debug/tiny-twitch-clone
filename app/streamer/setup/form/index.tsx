@@ -9,7 +9,6 @@ import { useForm } from "react-hook-form";
 import { FiAtSign } from "react-icons/fi";
 import { toast } from "sonner";
 import { TbCircleCheck } from "react-icons/tb";
-import { useRouter } from "next/navigation";
 
 export type SetupFormInputValue = { username: string };
 
@@ -58,7 +57,6 @@ function SetupTagsFormItem({ code, isIncluded, onSelect }: SetupTagsItem) {
 }
 
 export default function SetupForm() {
-  const router = useRouter();
   const [loading, setIsLoading] = useState(false);
   const { register, handleSubmit } = useForm<SetupFormInputValue>();
   const [services, setServices] = useState<SetupTags[]>([]);
@@ -74,7 +72,7 @@ export default function SetupForm() {
       }
       const result = await mutateAsync({ username: v.username });
       if (result.code && result.code === 200) {
-        router.replace("/");
+        window.location.href = "/";
       }
     } catch {
       setIsLoading(false);

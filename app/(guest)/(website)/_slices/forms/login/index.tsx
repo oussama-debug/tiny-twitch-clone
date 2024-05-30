@@ -7,7 +7,6 @@ import { FiChevronRight } from "react-icons/fi";
 import { useSignIn } from "@clerk/nextjs";
 import { toast } from "sonner";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 export type LoginFormValues = {
   email: string;
@@ -15,7 +14,6 @@ export type LoginFormValues = {
 };
 
 export default function LoginForm() {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const { isLoaded, signIn, setActive } = useSignIn();
 
@@ -37,7 +35,7 @@ export default function LoginForm() {
       if (signinResult.status === "complete") {
         setIsLoading(false);
         await setActive({ session: signinResult.createdSessionId });
-        router.replace("/");
+        window.location.href = "/";
       } else if (signinResult.status === "needs_identifier") {
         setIsLoading(false);
         toast.error("A valid email, phone number or username is required");
